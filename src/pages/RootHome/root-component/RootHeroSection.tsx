@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+
 const scrollToSection = (href: string) => {
   const element = document.querySelector(href);
   if (element) {
@@ -10,6 +12,7 @@ const scrollToSection = (href: string) => {
   }
 };
 export function RootHeroSection() {
+    const { t } = useTranslation();
     return (
         <section
             id="home"
@@ -64,18 +67,13 @@ export function RootHeroSection() {
                         }}>
 
             <span className="inline-block py-1 px-3 rounded-full bg-accent/20 text-accent font-semibold text-sm mb-6 border border-accent/30 backdrop-blur-sm">
-              International Students Affairs
+                {t('heroSubtitle')}
             </span>
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-                            Study at{' '}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-600">
-                Misr University
-              </span>{' '}
-                            for Science and Technology
+                            {t('heroMainTitle')}
                         </h1>
                         <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed">
-                            Explore world-class faculties, innovative programs, and boundless
-                            opportunities designed for international students.
+                            {t('heroDescription')}
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4">
@@ -83,13 +81,13 @@ export function RootHeroSection() {
                                 onClick={() => scrollToSection('#academics')}
                                 className="px-8 py-4 rounded-lg bg-accent hover:bg-accent-600 text-white font-medium text-center transition-all duration-300 shadow-lg shadow-accent/30 hover:shadow-accent/50 hover:-translate-y-1">
 
-                                Explore Programs
+                                {t('explorePrograms')}
                             </button>
                             <button
                                 onClick={() => scrollToSection('#admission')}
                                 className="px-8 py-4 rounded-lg border-2 border-white/80 text-white hover:bg-white hover:text-navy-600 font-medium text-center transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
 
-                                Apply Now
+                                {t('applyNow')}
                             </button>
                         </div>
                     </motion.div>
@@ -116,19 +114,19 @@ export function RootHeroSection() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-white/10">
                         {[
                             {
-                                label: 'Faculties',
+                                label: 'statFaculties',
                                 value: '15+'
                             },
                             {
-                                label: 'Programs',
+                                label: 'statPrograms',
                                 value: '100+'
                             },
                             {
-                                label: 'Nationalities',
+                                label: 'statNationalities',
                                 value: '50+'
                             },
                             {
-                                label: 'Years of Excellence',
+                                label: 'statYears',
                                 value: '25+'
                             }].
                         map((stat, i) =>
@@ -137,7 +135,7 @@ export function RootHeroSection() {
                                     {stat.value}
                                 </div>
                                 <div className="text-sm text-gray-400 font-medium uppercase tracking-wider">
-                                    {stat.label}
+                                    {t(stat.label)}
                                 </div>
                             </div>
                         )}

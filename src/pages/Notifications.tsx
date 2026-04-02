@@ -1,8 +1,9 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Megaphone, Calendar, Info, Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function Notifications() {
+  const { t } = useTranslation();
   const notifications = [
   {
     id: 1,
@@ -70,14 +71,14 @@ export function Notifications() {
       <div className="flex justify-between items-end mb-6 border-b border-gray-200 dark:border-slate-700 pb-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-            Notifications
+            {t('notificationsTitle', { defaultValue: 'Notifications' })}
           </h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
-            Stay updated with your latest alerts
+            {t('notificationsSubtitle', { defaultValue: 'Stay updated with your latest alerts' })}
           </p>
         </div>
         <button className="text-sm font-medium text-emerald-500 hover:text-emerald-600 dark:text-emerald-400 dark:hover:text-emerald-300 flex items-center gap-1 transition-colors">
-          <Check className="w-4 h-4" /> Mark all as read
+          <Check className="w-4 h-4" /> {t('markAllAsRead', { defaultValue: 'Mark all as read' })}
         </button>
       </div>
 

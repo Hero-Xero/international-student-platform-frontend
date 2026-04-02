@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Navbar } from './components/Navbar';
+import { MustHeader } from './components/MustHeader/MustHeader';
 import { Footer } from './components/Footer';
+import { HeroSlider } from './components/HeroSlider';
 import { FloatingSocialBar } from './components/FloatingSocialBar';
+import { LinksBar } from './components/LinksBar';
 // Pages
 import { Dashboard } from './pages/Dashboard';
-import { Academics } from './pages/Accademics/Academics.tsx';
+import { Academics } from './pages/Academics';
 import Questionnaires from './pages/Questionnaires';
 import { Resources } from './pages/Resources';
 import { Announcements } from './pages/Announcements';
@@ -23,7 +25,6 @@ import { Schedule } from './pages/Schedule';
 import { ProfileProvider } from './contexts/ProfileContext';
 import { RequestsProvider } from './contexts/RequestsContext';
 import { LanguageProvider, Language, useLanguage } from './contexts/LanguageContext';
-import {HeroSlider} from "./components/HeroSlider.tsx";
 
 export type PageType = 'dashboard' | 'academics' | 'questionnaires' | 'resources' | 'announcements' | 'notifications' | 'contact-us' | 'profile' | 'settings' | 'submit-request' | 'my-requests';
 
@@ -58,9 +59,10 @@ function AppContent() {
 
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-300 ${darkMode ? 'dark bg-comfortDark-bg text-comfortDark-text' : 'bg-white text-gray-900'}`}>
-<Navbar language={language} onToggleLanguage={toggleLanguage} darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
-    <HeroSlider />
-    <main className="flex-1 pt-16 md:pt-20">
+<MustHeader language={language as any} onToggleLanguage={toggleLanguage as any} darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
+
+      <HeroSlider />
+      <main className="flex-1 pt-24 md:pt-28 lg:pt-32">
         <AnimatePresence mode="wait" key={location.pathname}>
           <motion.div
             initial={{ opacity: 0, y: 10 }}

@@ -1,156 +1,100 @@
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin
-} from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import './Footer.scss';
 
 interface FooterProps {
   darkMode?: boolean;
 }
 
-export function Footer({ darkMode = false }: FooterProps) {
-  return (
-    <footer
-      className={`pt-16 pb-0 border-t-4 border-[#1C306E] mt-auto transition-colors duration-300 ${
-        darkMode ? 'bg-dark-surface text-white' : 'bg-[#1C306E] text-white'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Logo Section */}
-        <div className="flex justify-center mb-12">
-          <div
-            className={`w-28 h-28 rounded-full flex items-center justify-center overflow-hidden shadow-lg border-4 transition-colors duration-300 ${
-              darkMode ? 'bg-white border-dark-border' : 'bg-white border-navy-400'
-            }`}
-          >
-            <img
-              src="/must_logo.png"
-              alt="MUST"
-              className="w-full h-full object-contain p-2"
-            />
-          </div>
-        </div>
+export const Footer: React.FC<FooterProps> = ({ darkMode }) => {
+  const { t } = useTranslation();
 
-        {/* Columns Grid - 4 Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+  return (
+    <footer className={`must-footer ${darkMode ? 'dark' : ''}`}>
+      <div className="footer-container">
+        <div className="footer-grid">
           
           {/* Column 1: Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-[#00AC5C]">Links</h3>
-            <ul className={`space-y-2 text-sm ${darkMode ? 'text-gray-300' : 'text-navy-100'}`}>
-              {[
-                { label: 'Home', to: '/dashboard' },
-                { label: 'The University', href: 'https://must.edu.eg/about-must/board-of-trustees/', external: true },
-                { label: 'Academics', href: 'https://must.edu.eg/academic_programs/undergraduate-studies/', external: true },
-                { label: 'Life at MUST', href: 'https://must.edu.eg/about-must/board-of-trustees/', external: true },
-                { label: 'Research & Centres', href: 'https://must.edu.eg/centers/', external: true },
-                { label: 'Maps & Directions', href: 'https://must.edu.eg/centers/', external: true },
-                { label: 'FAQs', href: 'https://must.edu.eg/faqs/', external: true }
-              ].map(({ label, href, to, external }) =>
-                external ? (
-                  <li key={label}>
-                    <a href={href!} target="_blank" rel="noopener noreferrer" className="hover:text-[#00AC5C] transition-colors">{label}</a>
-                  </li>
-                ) : (
-                  <li key={label}>
-                    <NavLink to={to!} className="hover:text-[#00AC5C] transition-colors">{label}</NavLink>
-                  </li>
-                )
-              )}
+          <div className="footer-column">
+            <h3 className="footer-title">{t('links')}</h3>
+            <ul className="footer-links">
+              <li><a href="https://must.edu.eg/undergraduate-admission/" target="_blank" rel="noopener noreferrer">{t('undergraduate')}</a></li>
+              <li><a href="https://must.edu.eg/post-graduate-admission/" target="_blank" rel="noopener noreferrer">{t('postgraduate')}</a></li>
+              <li><a href="https://must.edu.eg/apply-now/" target="_blank" rel="noopener noreferrer">{t('applyNow')}</a></li>
+              <li><a href="https://must.edu.eg/faculties/" target="_blank" rel="noopener noreferrer">{t('facultiesTitle')}</a></li>
+              <li><a href="https://must.edu.eg/academic-calendar/" target="_blank" rel="noopener noreferrer">{t('academicCalendarTitle')}</a></li>
             </ul>
           </div>
 
           {/* Column 2: About University */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-[#00AC5C]">About University</h3>
-            <ul className={`space-y-2 text-sm ${darkMode ? 'text-gray-300' : 'text-navy-100'}`}>
-              {[
-                { label: 'About MUST', href: 'https://must.edu.eg/about-must/board-of-trustees/', external: true },
-                { label: 'History', href: 'https://must.edu.eg/history/', external: true },
-                { label: 'Accreditation', to: '/academics' },
-                { label: 'Why MUST', href: 'https://must.edu.eg/why-must/', external: true },
-                { label: 'Values', href: 'https://must.edu.eg/about-must/must-policies/', external: true },
-                { label: 'Contact Us', to: '/contact-us' },
-                { label: 'Privacy Policy', href: 'https://must.edu.eg/privacy-policy-2/', external: true }
-              ].map(({ label, href, to, external }) =>
-                external ? (
-                  <li key={label}>
-                    <a href={href!} target="_blank" rel="noopener noreferrer" className="hover:text-[#00AC5C] transition-colors">{label}</a>
-                  </li>
-                ) : (
-                  <li key={label}>
-                    <NavLink to={to!} className="hover:text-[#00AC5C] transition-colors">{label}</NavLink>
-                  </li>
-                )
-              )}
+          <div className="footer-column">
+            <h3 className="footer-title">{t('aboutUni')}</h3>
+            <ul className="footer-links">
+              <li><a href="https://must.edu.eg/presidents-office/" target="_blank" rel="noopener noreferrer">{t('president')}</a></li>
+              <li><a href="https://must.edu.eg/vice-presidents/" target="_blank" rel="noopener noreferrer">{t('vicePresidents')}</a></li>
+              <li><a href="https://must.edu.eg/board-of-trustees/" target="_blank" rel="noopener noreferrer">{t('boardOfTrustees')}</a></li>
+              <li><a href="https://must.edu.eg/about-must/vision-mission/" target="_blank" rel="noopener noreferrer">{t('visionMission')}</a></li>
+              <li><a href="https://must.edu.eg/about-must/must-policies/" target="_blank" rel="noopener noreferrer">{t('values')}</a></li>
+              <li><a href="https://must.edu.eg/history/" target="_blank" rel="noopener noreferrer">{t('history')}</a></li>
             </ul>
           </div>
 
           {/* Column 3: MUST Buzz */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-[#00AC5C]">MUST Buzz</h3>
-            <ul className={`space-y-2 text-sm ${darkMode ? 'text-gray-300' : 'text-navy-100'}`}>
-              {[
-                { label: 'MUST Events', to: '/announcements' },
-                { label: 'MUST News', to: '/announcements' },
-                { label: 'Blog', to: '/resources' },
-                { label: 'Announcement', to: '/announcements' }
-              ].map(({ label, to }) => (
-                <li key={label}>
-                  <NavLink to={to} className="hover:text-[#00AC5C] transition-colors">{label}</NavLink>
-                </li>
-              ))}
+          <div className="footer-column">
+            <h3 className="footer-title">{t('mustBuzz')}</h3>
+            <ul className="footer-links">
+              <li><a href="https://must.edu.eg/news/" target="_blank" rel="noopener noreferrer">{t('news')}</a></li>
+              <li><a href="https://must.edu.eg/events/" target="_blank" rel="noopener noreferrer">{t('events')}</a></li>
             </ul>
           </div>
 
-          
-{/* Column 4: Contact Info */}
-<div>
-  <h3 className="text-lg font-semibold mb-4 text-[#00AC5C]">
-    Contact Info
-  </h3>
+          {/* Column 4: Contact Info */}
+          <div className="footer-column contact-col">
+            <h3 className="footer-title">{t('contactInfo')}</h3>
+            <div className="contact-details">
+              <p className="address">
+                <i className="fas fa-map-marker-alt"></i>
+                {t('addressText')}
+              </p>
+              <p className="phone">
+                <i className="fas fa-phone"></i>
+                16878
+              </p>
+              <p className="email">
+                <i className="fas fa-envelope"></i>
+                info@must.edu.eg
+              </p>
+              
+              <div className="social-links">
+                <a href="https://www.facebook.com/mustuni" target="_blank" rel="noopener noreferrer" className="social-icon"><i className="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/must_uni" target="_blank" rel="noopener noreferrer" className="social-icon"><i className="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/must_uni" target="_blank" rel="noopener noreferrer" className="social-icon"><i className="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/school/mustuni/" target="_blank" rel="noopener noreferrer" className="social-icon"><i className="fab fa-linkedin-in"></i></a>
+                <a href="https://www.youtube.com/user/mustuniversity" target="_blank" rel="noopener noreferrer" className="social-icon"><i className="fab fa-youtube"></i></a>
+              </div>
+            </div>
+          </div>
 
-  <ul className={`space-y-3 text-sm ${darkMode ? 'text-gray-300' : 'text-navy-100'}`}>
+        </div>
 
-    {/* Phone */}
-    <li>
-      <a
-        href="tel:16878"
-        className="text-sm text-inherit hover:text-[#00AC5C] transition-colors duration-300 cursor-pointer"
-      >
-        16878
-      </a>
-    </li>
+        {/* Footer Bottom */}
+        <div className="footer-bottom">
+          <div className="bottom-content">
+            <p className="copyright">{t('copyright')}</p>
+            <div className="bottom-links">
+              <a href="https://must.edu.eg/privacy-policy/" target="_blank" rel="noopener noreferrer">{t('policyType')}</a>
+              <span className="separator">|</span>
+              <a href="https://must.edu.eg/contact/" target="_blank" rel="noopener noreferrer">{t('contactUs')}</a>
+            </div>
+          </div>
+        </div>
 
-    {/* Email */}
-    <li>
-      <a
-        href="mailto:info@must.edu.eg"
-        className="text-sm text-inherit hover:text-[#00AC5C] transition-colors duration-300 cursor-pointer"
-      >
-        info@must.edu.eg
-      </a>
-    </li>
-
-    {/* Address */}
-    <li className="text-sm leading-relaxed">
-      Al Motamayez District – 6th of October, Egypt
-    </li>
-
-  </ul>
-</div>
-</div>
       </div>
 
-     {/* Bottom Bar: Copyright Only */}
-       <div className="w-full bg-white py-4 border-t border-gray-200">
-    <p className="text-center text-sm text-gray-600">
-      Copyright All Right Reserved @ MUST UNIVERSITY {new Date().getFullYear()}
-    </p>
-  </div>
-  </footer>
+      {/* Decorative Wave/Pattern */}
+      <div className="footer-decoration">
+        <div className="wave"></div>
+      </div>
+    </footer>
   );
-}
+};

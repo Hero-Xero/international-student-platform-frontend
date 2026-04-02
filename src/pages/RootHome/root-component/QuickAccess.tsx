@@ -1,4 +1,5 @@
-import {motion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   GraduationCapIcon,
   BookOpenIcon,
@@ -8,6 +9,7 @@ import {
   GlobeIcon } from
 'lucide-react';
 import {SectionHeading} from "../SectionHeading.tsx";
+
 const scrollToSection = (href: string) => {
   const element = document.querySelector(href);
   if (element) {
@@ -21,50 +23,50 @@ const scrollToSection = (href: string) => {
 
 const cards = [
 {
-  title: 'Faculties',
-  description: 'Discover our 15+ world-class faculties and departments.',
+  titleKey: 'facultiesTitle',
+  descKey: 'qaFacultiesDesc',
   icon: GraduationCapIcon,
   href: '#university'
 },
 {
-  title: 'Programs',
-  description: 'Explore undergraduate and postgraduate academic programs.',
+  titleKey: 'academicPrograms',
+  descKey: 'qaProgramsDesc',
   icon: BookOpenIcon,
   href: '#academics'
 },
 {
-  title: 'Admission',
-  description: 'Learn about requirements and application steps.',
+  titleKey: 'admission',
+  descKey: 'qaAdmissionDesc',
   icon: ClipboardListIcon,
   href: '#admission'
 },
 {
-  title: 'Fees',
-  description:
-  'View tuition fees and payment options for international students.',
+  titleKey: 'tuitionFees',
+  descKey: 'qaFeesDesc',
   icon: DollarSignIcon,
   href: '#fees'
 },
 {
-  title: 'Regulations',
-  description: 'Download academic policies and faculty regulations.',
+  titleKey: 'regulationsTitle',
+  descKey: 'qaRegulationsDesc',
   icon: FileTextIcon,
   href: '#regulations'
 },
 {
-  title: 'International Students',
-  description: 'Services, support, and campus life for global students.',
+  titleKey: 'international',
+  descKey: 'qaInternationalDesc',
   icon: GlobeIcon,
   href: '#international'
 }];
 
 export function QuickAccess() {
+  const { t } = useTranslation();
   return (
     <section className="py-20 bg-gray-50 dark:bg-navy-600 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <SectionHeading
-          title="Quick Access"
-          subtitle="Find everything you need to start your journey at MUST." />
+          title={t('quickAccessTitle')}
+          subtitle={t('quickAccessSubtitle')} />
 
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -96,11 +98,11 @@ export function QuickAccess() {
               </div>
 
               <h3 className="text-xl font-bold text-navy-600 dark:text-white mb-3 group-hover:text-accent transition-colors">
-                {card.title}
+                {t(card.titleKey)}
               </h3>
 
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                {card.description}
+                {t(card.descKey)}
               </p>
             </motion.button>
           )}

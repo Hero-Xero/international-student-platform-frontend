@@ -1,66 +1,69 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { FileDownIcon, ChevronDownIcon } from 'lucide-react';
 import {SectionHeading} from "../SectionHeading.tsx";
-const regulations = [
+
+const regulationsData = [
     {
-        faculty: 'General University Regulations',
+        facultyKey: 'genUniRegs',
         items: [
             {
-                title: 'Student Code of Conduct',
+                titleKey: 'studentConduct',
                 size: '2.4 MB'
             },
             {
-                title: 'Academic Integrity Policy',
+                titleKey: 'academicIntegrity',
                 size: '1.1 MB'
             },
             {
-                title: 'International Student Guidelines',
+                titleKey: 'intlGuidelines',
                 size: '3.5 MB'
             }]
 
     },
     {
-        faculty: 'Faculty of Engineering',
+        facultyKey: 'engineering',
         items: [
             {
-                title: 'Engineering Undergraduate Bylaws',
+                titleKey: 'engBylaws',
                 size: '4.2 MB'
             },
             {
-                title: 'Graduation Project Guidelines',
+                titleKey: 'gradProjectReq',
                 size: '1.8 MB'
             }]
 
     },
     {
-        faculty: 'Faculty of Medicine',
+        facultyKey: 'medicine',
         items: [
             {
-                title: 'Clinical Training Regulations',
+                titleKey: 'clinicalTraining',
                 size: '5.1 MB'
             },
             {
-                title: 'Medical Student Handbook',
+                titleKey: 'medStudentHandbook',
                 size: '8.4 MB'
             }]
 
     },
     {
-        faculty: 'Faculty of Business',
+        facultyKey: 'business',
         items: [
             {
-                title: 'Business Administration Bylaws',
+                titleKey: 'busAdminBylaws',
                 size: '2.9 MB'
             },
             {
-                title: 'Internship Requirements',
+                titleKey: 'internshipReq',
                 size: '1.2 MB'
             }]
 
     }];
 
 export function RegulationsSection() {
+    const { t } = useTranslation();
     const [openIndex, setOpenIndex] = useState<number | null>(0);
     return (
         <section
@@ -69,12 +72,12 @@ export function RegulationsSection() {
 
             <div className="max-w-4xl mx-auto px-4 md:px-8">
                 <SectionHeading
-                    title="Academic Regulations"
-                    subtitle="Download official bylaws, policies, and guidelines for your academic journey." />
+                    title={t('regulationsTitle')}
+                    subtitle={t('regulationsSubtitle')} />
 
 
                 <div className="space-y-4">
-                    {regulations.map((section, index) =>
+                    {regulationsData.map((section, index) =>
                         <motion.div
                             key={index}
                             initial={{
@@ -98,7 +101,7 @@ export function RegulationsSection() {
                                 className="w-full px-6 py-4 flex items-center justify-between bg-white dark:bg-navy-500 hover:bg-gray-50 dark:hover:bg-navy-600 transition-colors">
 
                                 <h3 className="text-lg font-bold text-navy-600 dark:text-white text-left">
-                                    {section.faculty}
+                                    {t(section.facultyKey)}
                                 </h3>
                                 <ChevronDownIcon
                                     className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`} />
@@ -137,15 +140,15 @@ export function RegulationsSection() {
                                                         </div>
                                                         <div>
                                                             <p className="font-medium text-navy-600 dark:text-gray-200 group-hover:text-accent transition-colors">
-                                                                {item.title}
+                                                                {t(item.titleKey)}
                                                             </p>
                                                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                                PDF Document • {item.size}
+                                                                {t('pdfDocument')} • {item.size}
                                                             </p>
                                                         </div>
                                                     </div>
                                                     <button className="text-sm font-medium text-gray-500 hover:text-accent dark:text-gray-400 dark:hover:text-accent transition-colors px-4 py-2 rounded-md border border-gray-200 dark:border-navy-500 hover:border-accent dark:hover:border-accent">
-                                                        Download
+                                                        {t('download')}
                                                     </button>
                                                 </div>
                                             )}
@@ -158,5 +161,4 @@ export function RegulationsSection() {
                 </div>
             </div>
         </section>);
-
 }

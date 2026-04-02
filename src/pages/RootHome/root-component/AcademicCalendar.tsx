@@ -1,44 +1,48 @@
 import { motion } from 'framer-motion';
-import {SectionHeading} from "../SectionHeading.tsx";
+import { useTranslation } from 'react-i18next';
+import { SectionHeading } from "../SectionHeading.tsx";
+
 const dates = [
     {
-        date: 'Sep 20, 2025',
-        event: 'Fall Semester Begins',
+        dateKey: 'dateSep20',
+        eventKey: 'fallSemesterBegins',
         type: 'start'
     },
     {
-        date: 'Oct 06, 2025',
-        event: 'Armed Forces Day (Holiday)',
+        dateKey: 'dateOct06',
+        eventKey: 'armedForcesDay',
         type: 'holiday'
     },
     {
-        date: 'Nov 15 - Nov 25, 2025',
-        event: 'Midterm Examinations',
+        dateKey: 'dateNov15_25',
+        eventKey: 'midtermExams',
         type: 'exam'
     },
     {
-        date: 'Jan 05 - Jan 20, 2026',
-        event: 'Final Examinations',
+        dateKey: 'dateJan05_20',
+        eventKey: 'finalExams',
         type: 'exam'
     },
     {
-        date: 'Jan 25, 2026',
-        event: 'Revolution Day (Holiday)',
+        dateKey: 'dateJan25',
+        eventKey: 'revolutionDay',
         type: 'holiday'
     },
     {
-        date: 'Feb 15, 2026',
-        event: 'Spring Semester Begins',
+        dateKey: 'dateFeb15',
+        eventKey: 'springSemesterBegins',
         type: 'start'
     }];
 
 export function AcademicCalendar() {
+    const { t } = useTranslation();
+    
     return (
         <section className="py-20 bg-white dark:bg-navy-500 transition-colors duration-300">
             <div className="max-w-4xl mx-auto px-4 md:px-8">
                 <SectionHeading
-                    title="Academic Calendar"
-                    subtitle="Stay on track with important dates for the upcoming academic year." />
+                    title={t('academicCalendarTitleRoot')}
+                    subtitle={t('academicCalendarSubtitle')} />
 
 
                 <div className="bg-gray-50 dark:bg-navy-600 rounded-2xl p-8 border border-gray-100 dark:border-navy-500">
@@ -46,20 +50,20 @@ export function AcademicCalendar() {
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-accent"></div>
                             <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                Semester Start
-              </span>
+                                {t('semesterStart')}
+                            </span>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-orange-500"></div>
                             <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                Examinations
-              </span>
+                                {t('examinations')}
+                            </span>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-blue-500"></div>
                             <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                Holidays
-              </span>
+                                {t('holidays')}
+                            </span>
                         </div>
                     </div>
 
@@ -92,10 +96,10 @@ export function AcademicCalendar() {
                                 }}>
 
                                 <div className="font-bold text-navy-600 dark:text-white mb-2 sm:mb-0">
-                                    {item.date}
+                                    {t(item.dateKey)}
                                 </div>
                                 <div className="text-gray-600 dark:text-gray-300 font-medium">
-                                    {item.event}
+                                    {t(item.eventKey)}
                                 </div>
                             </motion.div>
                         )}
@@ -103,5 +107,4 @@ export function AcademicCalendar() {
                 </div>
             </div>
         </section>);
-
 }

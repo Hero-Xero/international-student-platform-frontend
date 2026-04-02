@@ -9,9 +9,9 @@ import {
   Library,
   Home,
   Bus,
-  HeartPulse,
-  BookOpen
+  HeartPulse
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ResourceFile {
   name: string;
@@ -114,6 +114,7 @@ const ResourceSection: React.FC<ResourceSectionProps> = ({ category, isOpen, onT
 );
 
 export function Resources() {
+  const { t } = useTranslation();
   const [openCategories, setOpenCategories] = useState<{ [key: string]: boolean }>({});
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -138,10 +139,10 @@ export function Resources() {
           animate={{ opacity: 1, y: 0 }} 
           className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4"
         >
-          Resources
+          {t('resourcesTitle', { defaultValue: 'Resources' })}
         </motion.h1>
         <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto leading-relaxed text-lg">
-          Download important documents and access useful links for international students at MUST.
+          {t('resourcesDesc', { defaultValue: 'Download important documents and access useful links for international students at MUST.' })}
         </p>
       </div>
 
@@ -151,7 +152,7 @@ export function Resources() {
           <div className="relative">
             <input
               type="text"
-              placeholder="Search documents..."
+              placeholder={t('searchDocuments', { defaultValue: 'Search documents...' })}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full p-4 pl-12 pr-12 rounded-2xl border-2 border-gray-200 dark:border-gray-700 focus:border-emerald-500 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-100 dark:focus:ring-emerald-900/50 shadow-sm transition-all text-lg placeholder-gray-400"
@@ -162,7 +163,7 @@ export function Resources() {
 
         {/* Categories */}
         <div className="mb-16">
-          {filteredCategories.map((cat, idx) => (
+          {filteredCategories.map((cat) => (
             <ResourceSection 
               key={cat.title}
               category={cat}
@@ -173,7 +174,7 @@ export function Resources() {
           {filteredCategories.length === 0 && (
             <div className="text-center py-16">
               <Download className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-500 dark:text-gray-400 text-lg">No documents found matching your search</p>
+              <p className="text-gray-500 dark:text-gray-400 text-lg">{t('noDocumentsFound', { defaultValue: 'No documents found matching your search' })}</p>
             </div>
           )}
         </div>
@@ -182,7 +183,7 @@ export function Resources() {
         <div className="mb-16">
           <div className="flex items-center gap-3 mb-8">
             <span className="text-emerald-500 text-2xl">🔗</span>
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Important Links</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t('importantLinks', { defaultValue: 'Important Links' })}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {quickLinks.map((link, idx) => (
@@ -214,8 +215,8 @@ export function Resources() {
           className="bg-gradient-to-r from-emerald-500 to-green-600 rounded-3xl p-12 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-6 text-white shadow-2xl"
         >
           <div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">Can't find what you need?</h3>
-            <p className="text-lg opacity-90">Contact International Students Affairs for additional resources</p>
+            <h3 className="text-2xl md:text-3xl font-bold mb-4">{t('cantFindNeed', { defaultValue: "Can't find what you need?" })}</h3>
+            <p className="text-lg opacity-90">{t('contactAffairsDesc', { defaultValue: 'Contact International Students Affairs for additional resources' })}</p>
           </div>
           <button 
             className="bg-white text-emerald-600 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-emerald-50 hover:scale-105 transition-all shadow-lg"
@@ -223,7 +224,7 @@ export function Resources() {
               window.location.href = '/contact-us';
             }}
           >
-            Contact Us
+            {t('contactUsBtn', { defaultValue: 'Contact Us' })}
           </button>
         </motion.div>
       </div>

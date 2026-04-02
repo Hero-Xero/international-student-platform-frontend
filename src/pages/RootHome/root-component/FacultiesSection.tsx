@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
     StethoscopeIcon,
     LaptopIcon,
@@ -11,63 +12,65 @@ import {
     WrenchIcon } from
         'lucide-react';
 import {SectionHeading} from "../SectionHeading.tsx";
+
 const faculties = [
     {
-        name: 'Medicine',
+        nameKey: 'medicine',
         icon: StethoscopeIcon,
         color: 'from-blue-500 to-blue-700',
-        desc: 'Pioneering medical education and research.'
+        descKey: 'medicineDesc'
     },
     {
-        name: 'Engineering',
+        nameKey: 'engineering',
         icon: WrenchIcon,
         color: 'from-orange-500 to-orange-700',
-        desc: 'Building the future with innovative engineering.'
+        descKey: 'engineeringDesc'
     },
     {
-        name: 'Computer Science',
+        nameKey: 'computerScience',
         icon: LaptopIcon,
         color: 'from-indigo-500 to-indigo-700',
-        desc: 'Advancing technology and digital solutions.'
+        descKey: 'csDesc'
     },
     {
-        name: 'Pharmacy',
+        nameKey: 'pharmacy',
         icon: PillIcon,
         color: 'from-emerald-500 to-emerald-700',
-        desc: 'Excellence in pharmaceutical sciences.'
+        descKey: 'pharmacyDesc'
     },
     {
-        name: 'Business',
+        nameKey: 'business',
         icon: BriefcaseIcon,
         color: 'from-amber-500 to-amber-700',
-        desc: "Developing tomorrow's business leaders."
+        descKey: 'businessDesc'
     },
     {
-        name: 'Mass Communication',
+        nameKey: 'massComm',
         icon: MicIcon,
         color: 'from-rose-500 to-rose-700',
-        desc: 'Shaping the future of media and journalism.'
+        descKey: 'massCommDesc'
     },
     {
-        name: 'Languages',
+        nameKey: 'languages',
         icon: LanguagesIcon,
         color: 'from-violet-500 to-violet-700',
-        desc: 'Bridging cultures through linguistics.'
+        descKey: 'languagesDesc'
     },
     {
-        name: 'Biotechnology',
+        nameKey: 'biotechnology',
         icon: DnaIcon,
         color: 'from-cyan-500 to-cyan-700',
-        desc: 'Exploring the frontiers of life sciences.'
+        descKey: 'biotechDesc'
     },
     {
-        name: 'Archaeology',
+        nameKey: 'archaeology',
         icon: LandmarkIcon,
         color: 'from-stone-500 to-stone-700',
-        desc: 'Uncovering history and preserving heritage.'
+        descKey: 'archaeologyDesc'
     }];
 
 export function FacultiesSection() {
+    const { t } = useTranslation();
     return (
         <section
             id="university"
@@ -75,8 +78,8 @@ export function FacultiesSection() {
 
             <div className="max-w-7xl mx-auto px-4 md:px-8">
                 <SectionHeading
-                    title="Our Faculties"
-                    subtitle="Explore our diverse range of faculties offering world-class education and research opportunities." />
+                    title={t('facultiesTitle')}
+                    subtitle={t('facultiesSubtitle')} />
 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -106,16 +109,16 @@ export function FacultiesSection() {
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3"></div>
                                 <faculty.icon className="w-10 h-10 text-white/90 relative z-10" />
                                 <h3 className="text-xl font-bold text-white relative z-10">
-                                    {faculty.name}
+                                    {t(faculty.nameKey)}
                                 </h3>
                             </div>
 
                             <div className="p-6 flex-1 flex flex-col">
                                 <p className="text-gray-600 dark:text-gray-300 mb-6 flex-1">
-                                    {faculty.desc}
+                                    {t(faculty.descKey)}
                                 </p>
                                 <button className="text-accent font-medium flex items-center gap-2 group-hover:gap-3 transition-all w-fit">
-                                    View Programs
+                                    {t('viewPrograms')}
                                     <span className="text-lg">→</span>
                                 </button>
                             </div>

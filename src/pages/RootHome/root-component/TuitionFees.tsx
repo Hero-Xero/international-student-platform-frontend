@@ -1,49 +1,52 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {SectionHeading} from "../SectionHeading.tsx";
+
 const feesData = [
     {
-        faculty: 'Medicine',
+        facultyKey: 'medicine',
         local: '150,000',
         intl: '8,000'
     },
     {
-        faculty: 'Dentistry',
+        facultyKey: 'dentistry',
         local: '120,000',
         intl: '7,000'
     },
     {
-        faculty: 'Pharmacy',
+        facultyKey: 'pharmacy',
         local: '100,000',
         intl: '6,000'
     },
     {
-        faculty: 'Engineering',
+        facultyKey: 'engineering',
         local: '70,000',
         intl: '4,500'
     },
     {
-        faculty: 'Computer Science',
+        facultyKey: 'computerScience',
         local: '60,000',
         intl: '4,000'
     },
     {
-        faculty: 'Business Administration',
+        facultyKey: 'business',
         local: '50,000',
         intl: '3,500'
     },
     {
-        faculty: 'Mass Communication',
+        facultyKey: 'massComm',
         local: '45,000',
         intl: '3,000'
     },
     {
-        faculty: 'Languages',
+        facultyKey: 'languages',
         local: '40,000',
         intl: '2,500'
     }];
 
 export function TuitionFees() {
+    const { t } = useTranslation();
     const [isInternational, setIsInternational] = useState(true);
     return (
         <section
@@ -52,8 +55,8 @@ export function TuitionFees() {
 
             <div className="max-w-5xl mx-auto px-4 md:px-8">
                 <SectionHeading
-                    title="Tuition Fees"
-                    subtitle="Transparent pricing for your academic journey. Select your student type to view applicable fees." />
+                    title={t('tuitionFees')}
+                    subtitle={t('feesSubtitle')} />
 
 
                 <div className="flex justify-center mb-10">
@@ -62,13 +65,13 @@ export function TuitionFees() {
                             onClick={() => setIsInternational(false)}
                             className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${!isInternational ? 'bg-accent text-white shadow-md' : 'text-gray-600 dark:text-gray-300 hover:text-navy-600 dark:hover:text-white'}`}>
 
-                            Egyptian Students
+                            {t('egyptianStudents')}
                         </button>
                         <button
                             onClick={() => setIsInternational(true)}
                             className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${isInternational ? 'bg-accent text-white shadow-md' : 'text-gray-600 dark:text-gray-300 hover:text-navy-600 dark:hover:text-white'}`}>
 
-                            International Students
+                            {t('intlStudents')}
                         </button>
                     </div>
                 </div>
@@ -91,9 +94,9 @@ export function TuitionFees() {
                         <table className="w-full text-left border-collapse">
                             <thead>
                             <tr className="bg-navy-600 text-white">
-                                <th className="py-4 px-6 font-semibold">Faculty</th>
-                                <th className="py-4 px-6 font-semibold">Annual Fees</th>
-                                <th className="py-4 px-6 font-semibold">Currency</th>
+                                <th className="py-4 px-6 font-semibold">{t('facultiesTitle')}</th>
+                                <th className="py-4 px-6 font-semibold">{t('annualFees')}</th>
+                                <th className="py-4 px-6 font-semibold">{t('currency')}</th>
                             </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 dark:divide-navy-600">
@@ -103,13 +106,13 @@ export function TuitionFees() {
                                     className="hover:bg-gray-50 dark:hover:bg-navy-600/50 transition-colors">
 
                                     <td className="py-4 px-6 text-navy-600 dark:text-white font-medium">
-                                        {row.faculty}
+                                        {t(row.facultyKey)}
                                     </td>
                                     <td className="py-4 px-6 text-gray-700 dark:text-gray-300 font-semibold text-lg">
                                         {isInternational ? row.intl : row.local}
                                     </td>
                                     <td className="py-4 px-6 text-gray-500 dark:text-gray-400">
-                                        {isInternational ? 'USD ($)' : 'EGP (LE)'}
+                                        {isInternational ? t('currencyUSD') : t('currencyEGP')}
                                     </td>
                                 </tr>
                             )}
@@ -117,11 +120,9 @@ export function TuitionFees() {
                         </table>
                     </div>
                     <div className="bg-gray-50 dark:bg-navy-600 p-4 text-sm text-gray-500 dark:text-gray-400 text-center border-t border-gray-100 dark:border-navy-500">
-                        * Fees are subject to change. Additional administrative and lab fees
-                        may apply.
+                        {t('feesDisclaimer') || t('feesNote')}
                     </div>
                 </motion.div>
             </div>
         </section>);
-
 }

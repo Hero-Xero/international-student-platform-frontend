@@ -1,5 +1,5 @@
 import React from 'react';
-import type { PageType, Language } from '../App';
+import type { PageType } from '../App';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useEffect } from 'react';
 
@@ -30,9 +30,9 @@ const QuestionnaireCard = ({ item, onStart }: { item: Questionnaire; onStart?: (
         </span>
         <span className={`text-[11px] font-bold flex items-center gap-1 ${item.status === 'Pending' ? 'text-orange-500' : 'text-green-500'}`}>
           {item.status === 'Pending' ? (
-            <><span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span> Pending</>
+            <><span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span> {((window as any)._t || ((s:string)=>s))('pendingFilter', { defaultValue: 'Pending' })}</>
           ) : (
-            <>✔️ Submitted</>
+            <>✔️ {((window as any)._t || ((s:string)=>s))('submittedFilter', { defaultValue: 'Submitted' })}</>
           )}
         </span>
       </div>
@@ -42,15 +42,15 @@ const QuestionnaireCard = ({ item, onStart }: { item: Questionnaire; onStart?: (
     
     <div className="flex justify-between items-center pt-4 border-t border-gray-50 dark:border-gray-700">
       <div className="text-gray-400 dark:text-gray-500 text-[11px] flex items-center gap-1">
-        {item.status === 'Pending' && <span>🕒 Due:</span>}
+        {item.status === 'Pending' && <span>🕒 {((window as any)._t || ((s:string)=>s))('due', { defaultValue: 'Due:' })}</span>}
         {item.date}
       </div>
       {item.status === 'Pending' ? (
         <button onClick={onStart} className="text-[#00AC5C] font-bold text-sm flex items-center gap-1 hover:underline transition-all cursor-pointer">
-          Start <span className="text-[10px]">↗</span>
+          {((window as any)._t || ((s:string)=>s))('startQuestionnaire', { defaultValue: 'Start' })} <span className="text-[10px]">↗</span>
         </button>
       ) : (
-        <span className="text-gray-300 dark:text-gray-500 text-xs italic">Completed</span>
+        <span className="text-gray-300 dark:text-gray-500 text-xs italic">{((window as any)._t || ((s:string)=>s))('completedStatus', { defaultValue: 'Completed' })}</span>
       )}
     </div>
   </div>
@@ -61,9 +61,10 @@ interface QuestionnairesProps {
   darkMode?: boolean;
 }
 
-const Questionnaires: React.FC<QuestionnairesProps> = ({ onNavigate, darkMode = false }) => {
+const Questionnaires: React.FC<QuestionnairesProps> = ({ onNavigate }) => {
   const { language, t } = useLanguage();
   const [filter, setFilter] = React.useState<'all' | 'pending' | 'submitted'>('all');
+  (window as any)._t = t; 
 
   useEffect(() => {
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
@@ -75,9 +76,7 @@ const Questionnaires: React.FC<QuestionnairesProps> = ({ onNavigate, darkMode = 
     return item.status === 'Submitted';
   });
 
-  const handleNav = (page: PageType) => {
-    onNavigate?.(page);
-  };
+
 
   const handleStart = (id: number) => {
     // Simulate starting questionnaire
@@ -93,8 +92,8 @@ const Questionnaires: React.FC<QuestionnairesProps> = ({ onNavigate, darkMode = 
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
           <div>
-            <h2 className="text-3xl font-extrabold text-gray-800 dark:text-comfortDark-text mb-2">Questionnaires</h2>
-            <p className="text-gray-500 dark:text-comfortDark-text-sec text-sm">Complete surveys and course evaluations to help improve your experience</p>
+            <h2 className="text-3xl font-extrabold text-gray-800 dark:text-comfortDark-text mb-2">{t('questionnairesTitle' as any) || 'Questionnaires'}</h2>
+            <p className="text-gray-500 dark:text-comfortDark-text-sec text-sm">{t('questionnairesPageDesc' as any) || 'Complete surveys and course evaluations'}</p>
           </div>
           <div className="flex gap-3 mt-4 md:mt-0">
             <div className="bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-300 px-4 py-2 rounded-xl text-sm font-bold border border-orange-100 dark:border-orange-800">
@@ -111,17 +110,17 @@ const Questionnaires: React.FC<QuestionnairesProps> = ({ onNavigate, darkMode = 
           <button 
             onClick={() => setFilter('all')}
             className={`px-8 py-2.5 rounded-full text-sm font-semibold shadow-md transition-all ${filter === 'all' ? 'bg-[#00AC5C] text-white shadow-lg' : 'bg-white dark:bg-comfortDark-card text-gray-500 dark:text-comfortDark-text-sec hover:bg-gray-100 dark:hover:bg-comfortDark-card-hover border border-gray-200 dark:border-comfortDark-border'}`}>
-            All
+            {t('allFilter' as any) || 'All'}
           </button>
           <button 
             onClick={() => setFilter('pending')}
             className={`px-8 py-2.5 rounded-full text-sm font-semibold shadow-md transition-all ${filter === 'pending' ? 'bg-orange-500 text-white shadow-lg' : 'bg-white dark:bg-comfortDark-card text-gray-500 dark:text-comfortDark-text-sec hover:bg-gray-100 dark:hover:bg-comfortDark-card-hover border border-gray-200 dark:border-comfortDark-border'}`}>
-            Pending
+            {t('pendingFilter' as any) || 'Pending'}
           </button>
           <button 
             onClick={() => setFilter('submitted')}
             className={`px-8 py-2.5 rounded-full text-sm font-semibold shadow-md transition-all ${filter === 'submitted' ? 'bg-green-500 text-white shadow-lg' : 'bg-white dark:bg-comfortDark-card text-gray-500 dark:text-comfortDark-text-sec hover:bg-gray-100 dark:hover:bg-comfortDark-card-hover border border-gray-200 dark:border-comfortDark-border'}`}>
-            Submitted
+            {t('submittedFilter' as any) || 'Submitted'}
           </button>
         </div>
 

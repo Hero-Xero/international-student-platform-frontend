@@ -10,11 +10,11 @@ import {
   CheckCircle2,
   UploadCloud
 } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext';
+import { useTranslation } from 'react-i18next';
 
 export function Profile() {
   const { state, dispatch } = useProfile();
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleEditToggle = () => {
@@ -76,13 +76,13 @@ export function Profile() {
               </button>
             </div>
             <div className="text-center sm:text-left flex-grow">
-              <h1 className="text-2xl font-bold text-navy-900">{state.profile.name}</h1>
-              <p className="text-navy-500 font-medium">
+              <h1 className="text-2xl font-bold text-navy-900 dark:text-white">{state.profile.name}</h1>
+              <p className="text-navy-500 dark:text-navy-300 font-medium">
                 {state.profile.department} • ID: 20230145
               </p>
             </div>
             <div className="bg-status-approved/10 text-status-approved px-4 py-2 rounded-lg font-semibold flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5" /> Active Student
+              <CheckCircle2 className="w-5 h-5" /> {t('activeStudent')}
             </div>
           </div>
         </div>
@@ -98,8 +98,8 @@ export function Profile() {
             transition={{ delay: 0.1 }}
             className="card p-6">
             
-            <div className="flex justify-between items-center mb-6 border-b border-surface-200 pb-4">
-              <h2 className="text-lg font-bold text-navy-900">
+            <div className="flex justify-between items-center mb-6 border-b border-surface-200 dark:border-navy-700 pb-4">
+              <h2 className="text-lg font-bold text-navy-900 dark:text-white">
                 {t('personalInfo')}
               </h2>
               <button 
@@ -110,60 +110,60 @@ export function Profile() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-8">
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('fullName')}
                 </p>
                 {state.isEditing ? (
                   <input 
                     value={state.profile.name}
                     onChange={(e) => dispatch({ type: 'UPDATE_PROFILE', payload: { name: e.target.value } })}
-                    className="w-full p-2 border border-surface-200 rounded-lg text-sm focus:ring-2 focus:ring-academic-500"
+                    className="w-full p-2 border border-surface-200 dark:border-navy-700 dark:bg-navy-800 dark:text-white rounded-lg text-sm focus:ring-2 focus:ring-academic-500"
                   />
                 ) : (
-                  <p className="text-sm font-semibold text-navy-900">
+                  <p className="text-sm font-semibold text-navy-900 dark:text-white">
                     {state.profile.name}
                   </p>
                 )}
               </div>
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('dob')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900">
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">
                   {state.profile.dob}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('nationality')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900">{state.profile.nationality}</p>
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">{state.profile.nationality}</p>
               </div>
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">{t('gender')}</p>
-                <p className="text-sm font-semibold text-navy-900">{state.profile.gender}</p>
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">{t('gender')}</p>
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">{state.profile.gender}</p>
               </div>
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('email')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900">
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">
                   {state.profile.email}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('phone')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900">
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">
                   {state.profile.phone}
                 </p>
               </div>
               <div className="sm:col-span-2">
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('address')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900">
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">
                   {state.profile.address}
                 </p>
               </div>
@@ -191,47 +191,47 @@ export function Profile() {
             transition={{ delay: 0.2 }}
             className="card p-6">
             
-            <div className="mb-6 border-b border-surface-200 pb-4">
-              <h2 className="text-lg font-bold text-navy-900">
+            <div className="mb-6 border-b border-surface-200 dark:border-navy-700 pb-4">
+              <h2 className="text-lg font-bold text-navy-900 dark:text-white">
                 {t('academicInfo')}
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-8">
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('faculty')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900">
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">
                   {state.profile.faculty}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('department')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900">
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">
                   {state.profile.department}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('enrollment')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900">
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">
                   {state.profile.enrollmentDate}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('graduation')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900">{state.profile.expectedGraduation}</p>
+                <p className="text-sm font-semibold text-navy-900 dark:text-white">{state.profile.expectedGraduation}</p>
               </div>
               <div className="sm:col-span-2">
-                <p className="text-xs text-navy-400 font-medium mb-1">
+                <p className="text-xs text-navy-400 dark:text-navy-300 font-medium mb-1">
                   {t('advisor')}
                 </p>
-                <p className="text-sm font-semibold text-navy-900 flex items-center gap-2">
+                <p className="text-sm font-semibold text-navy-900 dark:text-white flex items-center gap-2">
                   <img
                     src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                     className="w-6 h-6 rounded-full"
@@ -252,8 +252,8 @@ export function Profile() {
             transition={{ delay: 0.3 }}
             className="card p-6">
             
-            <div className="mb-6 border-b border-surface-200 pb-4">
-              <h2 className="text-lg font-bold text-navy-900">
+            <div className="mb-6 border-b border-surface-200 dark:border-navy-700 pb-4">
+              <h2 className="text-lg font-bold text-navy-900 dark:text-white">
                 {t('documents')}
               </h2>
             </div>
@@ -261,18 +261,18 @@ export function Profile() {
               {state.documents.map((doc, idx) =>
               <div
                 key={idx}
-                className="p-4 border border-surface-200 rounded-xl hover:border-navy-300 transition-colors group">
+                className="p-4 border border-surface-200 dark:border-navy-700 rounded-xl hover:border-navy-300 dark:hover:border-navy-500 transition-colors group">
                 
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="p-2 bg-surface-100 rounded-lg text-navy-500 shrink-0">
+                    <div className="p-2 bg-surface-100 dark:bg-navy-800 rounded-lg text-navy-500 dark:text-navy-300 shrink-0">
                       <FileText className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-navy-900">
+                      <h3 className="text-sm font-bold text-navy-900 dark:text-white">
                         {doc.name}
                       </h3>
-                      <p className="text-xs text-navy-400">
-                        Uploaded: {doc.date}
+                      <p className="text-xs text-navy-400 dark:text-navy-300">
+                        {t('uploaded')} {doc.date}
                       </p>
                     </div>
                   </div>
@@ -285,13 +285,13 @@ export function Profile() {
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button 
                         onClick={() => handleDownload(doc)}
-                        className="p-1.5 text-navy-400 hover:text-navy-600 hover:bg-surface-100 rounded"
-                        title="View document">
+                        className="p-1.5 text-navy-400 dark:text-navy-300 hover:text-navy-600 dark:hover:text-white hover:bg-surface-100 dark:hover:bg-navy-800 rounded"
+                        title={t('viewDoc')}>
                         <Eye className="w-4 h-4" />
                       </button>
                       <button 
                         onClick={() => handleDownload(doc)}
-                        className="p-1.5 text-navy-400 hover:text-navy-600 hover:bg-surface-100 rounded">
+                        className="p-1.5 text-navy-400 dark:text-navy-300 hover:text-navy-600 dark:hover:text-white hover:bg-surface-100 dark:hover:bg-navy-800 rounded">
                         <Download className="w-4 h-4" />
                       </button>
                     </div>
@@ -304,8 +304,8 @@ export function Profile() {
             </div>
             <button 
               onClick={() => fileInputRef.current?.click()}
-              className="w-full mt-6 py-2 border-2 border-dashed border-surface-300 rounded-lg text-sm font-semibold text-navy-500 hover:bg-surface-50 hover:border-navy-400 transition-colors flex items-center justify-center gap-2">
-              <UploadCloud className="w-4 h-4" /> {t('upload')} New Document
+              className="w-full mt-6 py-2 border-2 border-dashed border-surface-300 dark:border-navy-600 rounded-lg text-sm font-semibold text-navy-500 dark:text-navy-300 hover:bg-surface-50 dark:hover:bg-navy-800 hover:border-navy-400 dark:hover:border-navy-500 transition-colors flex items-center justify-center gap-2">
+              <UploadCloud className="w-4 h-4" /> {t('uploadNewDoc')}
             </button>
             <input
               ref={fileInputRef}

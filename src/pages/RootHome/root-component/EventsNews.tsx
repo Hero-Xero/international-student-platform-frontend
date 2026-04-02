@@ -1,55 +1,65 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { MapPinIcon, ClockIcon, CalendarIcon } from 'lucide-react';
-const events = [
+
+const eventsData = [
     {
         id: '01',
-        title: 'International Students Orientation Week',
-        location: 'Main Auditorium',
+        titleKey: 'orientationWeek',
+        locationKey: 'mainAuditorium',
+        timeKey: '',
         time: '09:00 AM',
         date: 'Sep 15, 2025'
     },
     {
         id: '02',
-        title: 'Global Cultural Festival',
-        location: 'Campus Square',
+        titleKey: 'culturalFestival',
+        locationKey: 'campusSquare',
+        timeKey: '',
         time: '10:00 AM',
         date: 'Oct 20, 2025'
     },
     {
         id: '03',
-        title: 'Career Fair for International Students',
-        location: 'Exhibition Hall',
+        titleKey: 'careerFair',
+        locationKey: 'exhibitionHall',
+        timeKey: '',
         time: '11:00 AM',
         date: 'Nov 05, 2025'
     }];
 
-const news = [
+const newsData = [
     {
         id: '01',
-        title: 'MUST Ranks Top 10 in Regional University Rankings',
-        location: 'University News',
-        time: 'Published',
+        titleKey: 'top10Ranking',
+        locationKey: 'uniNews',
+        time: '',
+        timeKey: 'published',
         date: 'Aug 10, 2025'
     },
     {
         id: '02',
-        title: 'New Research Center Opens in Faculty of Engineering',
-        location: 'Engineering Dept',
-        time: 'Published',
+        titleKey: 'researchCenterOpen',
+        locationKey: 'engDept',
+        time: '',
+        timeKey: 'published',
         date: 'Aug 05, 2025'
     },
     {
         id: '03',
-        title: 'International Scholarship Winners Announced',
-        location: 'Admissions Office',
-        time: 'Published',
+        titleKey: 'scholarshipWinners',
+        locationKey: 'admissions',
+        time: '',
+        timeKey: 'published',
         date: 'Jul 28, 2025'
     }];
 
 export function EventsNews() {
+    const { t } = useTranslation();
     const [activeTab, setActiveTab] = useState<'events' | 'news'>('events');
-    const items = activeTab === 'events' ? events : news;
+    const items = activeTab === 'events' ? eventsData : newsData;
+
     return (
         <section
             id="buzz"
@@ -58,10 +68,10 @@ export function EventsNews() {
             <div className="max-w-7xl mx-auto px-4 md:px-8">
                 <div className="mb-12">
                     <h2 className="text-sm font-bold text-accent uppercase tracking-wider mb-2">
-                        Events & News
+                        {t('eventsNewsTitle')}
                     </h2>
                     <h3 className="text-3xl md:text-5xl font-bold text-navy-600 dark:text-white max-w-2xl leading-tight">
-                        Students Live Their Days In The Best Environment.
+                        {t('buzzSubtitle')}
                     </h3>
                 </div>
 
@@ -70,7 +80,7 @@ export function EventsNews() {
                         onClick={() => setActiveTab('events')}
                         className={`pb-4 text-lg font-bold transition-colors relative ${activeTab === 'events' ? 'text-navy-600 dark:text-white' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}>
 
-                        Events
+                        {t('events')}
                         {activeTab === 'events' &&
                             <span className="absolute bottom-0 left-0 w-full h-1 bg-accent rounded-t-md"></span>
                         }
@@ -79,7 +89,7 @@ export function EventsNews() {
                         onClick={() => setActiveTab('news')}
                         className={`pb-4 text-lg font-bold transition-colors relative ${activeTab === 'news' ? 'text-navy-600 dark:text-white' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}>
 
-                        News
+                        {t('news')}
                         {activeTab === 'news' &&
                             <span className="absolute bottom-0 left-0 w-full h-1 bg-accent rounded-t-md"></span>
                         }
@@ -104,20 +114,19 @@ export function EventsNews() {
 
                         <div className="absolute inset-0 bg-gradient-to-br from-navy-600 to-navy-500 flex items-center justify-center">
               <span className="text-white/20 font-bold text-2xl tracking-widest uppercase">
-                MUST Campus
+                {t('mustCampus')}
               </span>
                         </div>
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500"></div>
                         <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
               <span className="inline-block px-3 py-1 bg-accent text-white text-xs font-bold rounded mb-3">
-                Featured
+                {t('featured')}
               </span>
                             <h4 className="text-2xl font-bold text-white mb-2">
-                                Experience the vibrant life at MUST campus
+                                {t('campusVibe')}
                             </h4>
                             <p className="text-gray-300 text-sm">
-                                Join a community that fosters growth, innovation, and cultural
-                                exchange.
+                                {t('communityGrowth')}
                             </p>
                         </div>
                     </motion.div>
@@ -148,16 +157,16 @@ export function EventsNews() {
                                 </div>
                                 <div className="flex-1">
                                     <h4 className="text-lg font-bold text-navy-600 dark:text-white mb-3 group-hover:text-accent transition-colors">
-                                        {item.title}
+                                        {t(item.titleKey)}
                                     </h4>
                                     <div className="flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-400">
                                         <div className="flex items-center gap-1">
                                             <MapPinIcon className="w-4 h-4" />
-                                            {item.location}
+                                            {t(item.locationKey)}
                                         </div>
                                         <div className="flex items-center gap-1">
                                             <ClockIcon className="w-4 h-4" />
-                                            {item.time}
+                                            {item.timeKey ? t(item.timeKey) : item.time}
                                         </div>
                                         <div className="flex items-center gap-1">
                                             <CalendarIcon className="w-4 h-4" />
@@ -168,11 +177,10 @@ export function EventsNews() {
                             </motion.div>
                         )}
                         <button className="mt-4 py-4 rounded-xl border-2 border-navy-600 dark:border-white text-navy-600 dark:text-white font-bold hover:bg-navy-600 hover:text-white dark:hover:bg-white dark:hover:text-navy-600 transition-colors">
-                            Discover More
+                            {t('discoverMore')}
                         </button>
                     </div>
                 </div>
             </div>
         </section>);
-
 }
