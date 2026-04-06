@@ -48,6 +48,22 @@ type HeroSlidesApiResponse = {
   data?: HeroSlideApiItem[];
 };
 
+type HeroNavItemApiEntry = {
+  id: number;
+  label?: string;
+  url?: string;
+  order?: number;
+  attributes?: {
+    label?: string;
+    url?: string;
+    order?: number;
+  };
+};
+
+type HeroNavItemsApiResponse = {
+  data?: HeroNavItemApiEntry[];
+};
+
 const fallbackSlides: SliderImage[] = fallbackImages.map((src, index) => ({
   id: `fallback-${index}`,
   src,
@@ -77,7 +93,7 @@ const toAbsoluteUrl = (url: string, baseUrl: string) => {
   return `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
 };
 
-const links = [
+const fallbackLinks = [
   { name: 'Home', path: '/' },
   { name: 'Academics', path: '/academics' },
   { name: 'Questionnaires', path: '/questionnaires' },
@@ -86,10 +102,28 @@ const links = [
   { name: 'Contact Us', path: '/contact-us' }
 ];
 
+const normalizeNavPath = (url: string) => {
+  const trimmed = url.trim();
+  if (!trimmed) {
+    return '/';
+  }
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed;
+  }
+
+  if (trimmed === 'home' || trimmed === 'homepage') {
+    return '/';
+  }
+
+  return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+};
+
 export function HeroSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [slides, setSlides] = useState<SliderImage[]>(fallbackSlides);
+  const [links, setLinks] = useState(fallbackLinks);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
 
@@ -134,6 +168,49 @@ export function HeroSlider() {
     };
 
     fetchSlides();
+  }, []);
+
+  useEffect(() => {
+    const fetchNavItems = async () => {
+      try {
+        const payload = await apiRequest<HeroNavItemsApiResponse>(
+          '/api/nav-items?sort=order:asc&filters[visible][$eq]=true',
+          { auth: false }
+        );
+
+        const rawItems = Array.isArray(payload?.data) ? payload.data : [];
+        const mappedLinks = rawItems
+          .map((item): { order: number; name: string; path: string } | null => {
+            const source = item.attributes || item;
+            const label = source.label?.trim();
+            const rawUrl = source.url?.trim();
+            const order = typeof source.order === 'number' ? source.order : Number.MAX_SAFE_INTEGER;
+
+            if (!label || !rawUrl) {
+              return null;
+            }
+
+            return {
+              order,
+              name: label,
+              path: normalizeNavPath(rawUrl),
+            };
+          })
+          .filter((item): item is { order: number; name: string; path: string } => item !== null)
+          .sort((a, b) => a.order - b.order)
+          .map(({ name, path }) => ({ name, path }));
+
+        if (mappedLinks.length > 0) {
+          setLinks(mappedLinks);
+        } else {
+          setLinks(fallbackLinks);
+        }
+      } catch {
+        setLinks(fallbackLinks);
+      }
+    };
+
+    fetchNavItems();
   }, []);
 
   useEffect(() => {
@@ -224,13 +301,25 @@ export function HeroSlider() {
         {/* LINKS */}
         <div className="flex flex-wrap justify-center gap-3 md:gap-5">
           {links.map((item, index) => (
-            <Link
-              key={index}
-              to={item.path}
-              className="px-4 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white text-sm md:text-base transition"
-            >
-              {item.name}
-            </Link>
+            /^https?:\/\//i.test(item.path) ? (
+              <a
+                key={index}
+                href={item.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white text-sm md:text-base transition"
+              >
+                {item.name}
+              </a>
+            ) : (
+              <Link
+                key={index}
+                to={item.path}
+                className="px-4 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white text-sm md:text-base transition"
+              >
+                {item.name}
+              </Link>
+            )
           ))}
         </div>
       </motion.div>
