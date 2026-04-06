@@ -22,6 +22,7 @@ import { SubmitRequest } from './pages/SubmitRequest';
 import { MyRequests } from './pages/MyRequests';
 import { RootPage } from './pages/RootHome/RootPage';
 import { Schedule } from './pages/Schedule';
+import { NotFound } from './pages/NotFound';
 import { ProfileProvider } from './contexts/ProfileContext';
 import { RequestsProvider } from './contexts/RequestsContext';
 import { LanguageProvider, Language, useLanguage } from './contexts/LanguageContext';
@@ -84,6 +85,7 @@ function AppContent() {
               <Route path="/submit-request" element={<SubmitRequest />} />
   <Route path="/my-requests" element={<MyRequests />} />
   <Route path="/schedule" element={<Schedule darkMode={darkMode} />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
 
           </motion.div>

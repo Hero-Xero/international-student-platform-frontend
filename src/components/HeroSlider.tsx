@@ -25,7 +25,7 @@ const links = [
   { name: 'Questionnaires', path: '/questionnaires' },
   { name: 'Resources', path: '/resources' },
   { name: 'Announcements', path: '/announcements' },
-  { name: 'Contact Us', path: '/ContactUs' }
+  { name: 'Contact Us', path: '/contact-us' }
 ];
 
 export function HeroSlider() {
