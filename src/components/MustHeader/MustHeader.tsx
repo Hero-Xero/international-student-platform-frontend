@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import './MustHeader.scss';
 import { MENU_ITEMS, MenuItem } from './navigation.data';
 import { useAuth } from '../../context/AuthContext';
 
 export interface MustHeaderProps {
-  language: string;
-  onToggleLanguage: (lang: string) => void;
   darkMode: boolean;
   onToggleDarkMode: () => void;
 }
 
-export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLanguage, darkMode, onToggleDarkMode }) => {
-  const { t } = useTranslation();
+export const MustHeader: React.FC<MustHeaderProps> = ({ darkMode, onToggleDarkMode }) => {
   const [activeDropdown, setActiveDropdown] = useState<MenuItem | null>(null);
   const [activeLeftItem, setActiveLeftItem] = useState<MenuItem | null>(null);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -82,13 +78,6 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
     onToggleDarkMode();
   };
 
-  const toggleLanguage = () => {
-    // Determine target lang based on current lang
-    // Assuming language variable might be an object or string, falling back to string check
-    const currentLangStr = typeof language === 'string' ? language : 'en';
-    onToggleLanguage(currentLangStr === 'en' ? 'ar' : 'en');
-  };
-
   const handleLogout = () => {
     logout();
     closeMenus();
@@ -100,7 +89,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
         <div className="header-container">
           
           {/* Left Logo */}
-          <Link to="/" className="logo-link" title={t('home')}>
+          <Link to="/" className="logo-link" title="Home">
             <img src="/assets/1740307130_140_87669_group1000004290.svg" alt="MUST Logo" className="logo-img" />
           </Link>
 
@@ -121,7 +110,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                       className="nav-link"
                       onClick={closeMenus}
                     >
-                      {t(item.translationKey || item.label)}
+                      {item.label}
                     </Link>
                   ) : (
                     <a
@@ -130,7 +119,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                       rel={item.externalUrl ? 'noopener noreferrer' : undefined}
                       className={`nav-link ${activeDropdown === item ? 'active' : ''}`}
                     >
-                      {t(item.translationKey || item.label)}
+                      {item.label}
                     </a>
                   )}
 
@@ -152,7 +141,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                     className="left-panel-link"
                                     onClick={closeMenus}
                                   >
-                                    {t(child.translationKey || child.label)}
+                                    {child.label}
                                   </Link>
                                 ) : (
                                   <a
@@ -161,7 +150,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                     rel={child.externalUrl ? 'noopener noreferrer' : undefined}
                                     className={`left-panel-link ${activeLeftItem === child ? 'active' : ''}`}
                                   >
-                                    {t(child.translationKey || child.label)}
+                                    {child.label}
                                     {child.children && child.children.length > 0 && (
                                       <i className={`fas icon-chevron ${activeLeftItem === child ? 'fa-chevron-right' : 'fa-chevron-down'}`}></i>
                                     )}
@@ -181,7 +170,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                                 className="right-panel-link"
                                                 onClick={closeMenus}
                                               >
-                                                {t(subChild.translationKey || subChild.label)}
+                                                {subChild.label}
                                               </Link>
                                             ) : (
                                               <a
@@ -190,7 +179,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                                 rel={subChild.externalUrl ? 'noopener noreferrer' : undefined}
                                                 className="right-panel-link"
                                               >
-                                                {t(subChild.translationKey || subChild.label)}
+                                                {subChild.label}
                                               </a>
                                             )}
 
@@ -205,7 +194,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                                       rel={deepChild.externalUrl ? 'noopener noreferrer' : undefined}
                                                       className="deep-panel-link"
                                                     >
-                                                      {t(deepChild.translationKey || deepChild.label)}
+                                                      {deepChild.label}
                                                     </a>
                                                   </li>
                                                 ))}
@@ -237,7 +226,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                 className="simple-dropdown-link"
                                 onClick={closeMenus}
                               >
-                                {t(child.translationKey || child.label)}
+                                {child.label}
                               </Link>
                             ) : (
                               <a
@@ -246,7 +235,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                 rel={child.externalUrl ? 'noopener noreferrer' : undefined}
                                 className="simple-dropdown-link"
                               >
-                                {t(child.translationKey || child.label)}
+                                {child.label}
                               </a>
                             )}
                           </li>
@@ -269,21 +258,15 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
               <i className={`fas ${!darkMode ? 'fa-sun' : 'fa-moon'}`}></i>
             </button>
 
-            <span className="control-divider">|</span>
-
-            <button className="icon-toggle lang-toggle ms-2 me-2" onClick={toggleLanguage}>
-              {(typeof language === 'string' ? language : 'en') === 'en' ? 'ع' : 'EN'}
-            </button>
-
             {!user ? (
               <>
                 <Link to="/login" className="btn-auth login-btn ms-2" style={{ textDecoration: 'none' }}>
                   <i className="fas fa-user-circle"></i>
-                  <span>{t('signIn', { defaultValue: 'Sign In' })}</span>
+                  <span>Sign In</span>
                 </Link>
                 <Link to="/register" className="btn-auth login-btn ms-2" style={{ textDecoration: 'none' }}>
                   <i className="fas fa-user-plus"></i>
-                  <span>{t('register', { defaultValue: 'Register' })}</span>
+                  <span>Register</span>
                 </Link>
               </>
             ) : (
@@ -297,7 +280,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                     style={{ textDecoration: 'none' }}
                   >
                     <i className="fas fa-gauge-high"></i>
-                    <span>{t('dashboard', { defaultValue: 'Dashboard' })}</span>
+                    <span>Dashboard</span>
                   </a>
                 )}
                 <Link to="/profile" className="btn-auth login-btn ms-2" style={{ textDecoration: 'none' }}>
@@ -306,7 +289,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                 </Link>
                 <button className="btn-auth logout-btn ms-2" onClick={handleLogout}>
                   <i className="fas fa-sign-out-alt"></i>
-                  <span>{t('signOut')}</span>
+                  <span>Sign Out</span>
                 </button>
               </>
             )}
@@ -331,7 +314,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                 {!item.children && (
                   item.routerLink ? (
                     <Link to={item.routerLink} className="mobile-nav-link" onClick={closeMenus}>
-                      {t(item.translationKey || item.label)}
+                      {item.label}
                     </Link>
                   ) : (
                     <a
@@ -341,7 +324,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                       className="mobile-nav-link"
                       onClick={closeMenus}
                     >
-                      {t(item.translationKey || item.label)}
+                      {item.label}
                     </a>
                   )
                 )}
@@ -354,7 +337,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                       className="mobile-nav-link"
                       onClick={(e) => toggleMobileItem(item, e)}
                     >
-                      {t(item.translationKey || item.label)}
+                      {item.label}
                       <i className={`fas ${mobileActiveItem !== item ? 'fa-chevron-down' : 'fa-chevron-up'}`}></i>
                     </a>
 
@@ -366,7 +349,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                             {(!child.children || child.children.length === 0) && (
                               child.routerLink ? (
                                 <Link to={child.routerLink} className="mobile-submenu-link" onClick={closeMenus}>
-                                  {t(child.translationKey || child.label)}
+                                  {child.label}
                                 </Link>
                               ) : (
                                 <a
@@ -376,7 +359,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                   className="mobile-submenu-link"
                                   onClick={closeMenus}
                                 >
-                                  {t(child.translationKey || child.label)}
+                                  {child.label}
                                 </a>
                               )
                             )}
@@ -389,7 +372,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                   className="mobile-submenu-link"
                                   onClick={(e) => toggleMobileSubItem(child, e)}
                                 >
-                                  {t(child.translationKey || child.label)}
+                                  {child.label}
                                   <i className={`fas ${mobileActiveSubItem !== child ? 'fa-chevron-down' : 'fa-chevron-up'}`}></i>
                                 </a>
                                 <ul className={`mobile-deep-list ${mobileActiveSubItem === child ? 'show' : ''}`}>
@@ -397,7 +380,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                     <li key={mdIdx}>
                                       {sub.routerLink ? (
                                         <Link to={sub.routerLink} className="deep-link-item" onClick={closeMenus}>
-                                          {t(sub.translationKey || sub.label)}
+                                          {sub.label}
                                         </Link>
                                       ) : (
                                         <a
@@ -407,7 +390,7 @@ export const MustHeader: React.FC<MustHeaderProps> = ({ language, onToggleLangua
                                           className="deep-link-item"
                                           onClick={closeMenus}
                                         >
-                                          {t(sub.translationKey || sub.label)}
+                                          {sub.label}
                                         </a>
                                       )}
                                     </li>

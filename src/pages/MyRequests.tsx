@@ -7,10 +7,8 @@ import {
   XCircle,
   Search,
   Eye } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 export function MyRequests() {
-  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('All');
   const tabs = ['All', 'Pending', 'Under Review', 'Approved', 'Rejected'];
   const requests = [
@@ -64,10 +62,10 @@ export function MyRequests() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-navy-900 dark:text-white">
-            {t('myRequestsTitle', { defaultValue: 'My Requests' })}
+            My Requests
           </h1>
           <p className="text-navy-400 dark:text-navy-200 mt-1">
-            {t('myRequestsSubtitle', { defaultValue: 'Track the status of your submitted applications' })}
+            Track the status of your submitted applications
           </p>
         </div>
 
@@ -75,7 +73,7 @@ export function MyRequests() {
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-navy-300 dark:text-navy-400" />
           <input
             type="text"
-            placeholder={t('searchRequests', { defaultValue: 'Search requests...' })}
+            placeholder="Search requests..."
             className="pl-9 pr-4 py-2 bg-white dark:bg-navy-800 dark:text-white border border-surface-200 dark:border-navy-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy-500 w-full sm:w-64" />
           
         </div>
@@ -89,7 +87,7 @@ export function MyRequests() {
           onClick={() => setActiveTab(tab)}
           className={`whitespace-nowrap px-6 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === tab ? 'border-navy-500 text-navy-900 dark:text-white' : 'border-transparent text-navy-400 dark:text-navy-300 hover:text-navy-600 dark:hover:text-white hover:border-surface-300 dark:hover:border-navy-500'}`}>
           
-            {t(`req${tab.replace(' ', '')}`, { defaultValue: tab })}
+            {tab}
           </button>
         )}
       </div>
@@ -108,11 +106,11 @@ export function MyRequests() {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-surface-50 dark:bg-navy-800 text-navy-400 dark:text-navy-200 text-sm border-b border-surface-200 dark:border-navy-700">
-                <th className="p-4 font-medium">{t('reqId', { defaultValue: 'Request ID' })}</th>
-                <th className="p-4 font-medium">{t('reqType', { defaultValue: 'Request Type' })}</th>
-                <th className="p-4 font-medium">{t('submissionDate', { defaultValue: 'Submission Date' })}</th>
-                <th className="p-4 font-medium">{t('status', { defaultValue: 'Status' })}</th>
-                <th className="p-4 font-medium text-right">{t('action', { defaultValue: 'Action' })}</th>
+                <th className="p-4 font-medium">Request ID</th>
+                <th className="p-4 font-medium">Request Type</th>
+                <th className="p-4 font-medium">Submission Date</th>
+                <th className="p-4 font-medium">Status</th>
+                <th className="p-4 font-medium text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-100 dark:divide-navy-700 bg-white dark:bg-navy-900">
@@ -153,7 +151,7 @@ export function MyRequests() {
               {filteredRequests.length === 0 &&
               <tr>
                   <td colSpan={5} className="p-8 text-center text-navy-400 dark:text-navy-300">
-                    {t('noRequestsFound', { defaultValue: 'No requests found for this status.' })}
+                    No requests found for this status.
                   </td>
                 </tr>
               }

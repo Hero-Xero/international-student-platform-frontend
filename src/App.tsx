@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { I18nextProvider } from 'react-i18next';
-import i18n from './i18n';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MustHeader } from './components/MustHeader/MustHeader';
 import { Footer } from './components/Footer';
@@ -25,23 +23,14 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { ProfileProvider } from './contexts/ProfileContext';
 import { RequestsProvider } from './contexts/RequestsContext';
-import { LanguageProvider, Language, useLanguage } from './contexts/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 export type PageType = 'academics' | 'questionnaires' | 'resources' | 'announcements' | 'notifications' | 'contact-us' | 'profile' | 'settings' | 'submit-request' | 'my-requests';
 
-export type { Language } from './contexts/LanguageContext';
-
 function AppContent() {
   const [darkMode, setDarkMode] = useState(false);
-  const { language, dispatch: languageDispatch } = useLanguage();
   const location = useLocation();
-
-  const toggleLanguage = (lang: Language) => {
-    languageDispatch({ type: 'SET_LANGUAGE', payload: lang });
-    i18n.changeLanguage(lang);
-  };
 
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
@@ -60,7 +49,7 @@ function AppContent() {
 
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-300 ${darkMode ? 'dark bg-comfortDark-bg text-comfortDark-text' : 'bg-white text-gray-900'}`}>
-<MustHeader language={language as any} onToggleLanguage={toggleLanguage as any} darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
+<MustHeader darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
 
       <HeroSlider />
       <main className="flex-1 pt-24 md:pt-28 lg:pt-32">
@@ -99,19 +88,15 @@ function AppContent() {
 
 export function App() {
   return (
-    <I18nextProvider i18n={i18n}>
-      <LanguageProvider>
-        <AuthProvider>
-          <ProfileProvider>
-            <RequestsProvider>
-              <BrowserRouter>
-                <AppContent />
-              </BrowserRouter>
-            </RequestsProvider>
-          </ProfileProvider>
-        </AuthProvider>
-      </LanguageProvider>
-    </I18nextProvider>
+    <AuthProvider>
+      <ProfileProvider>
+        <RequestsProvider>
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
+        </RequestsProvider>
+      </ProfileProvider>
+    </AuthProvider>
   );
 }
 
