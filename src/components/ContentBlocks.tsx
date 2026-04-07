@@ -4,6 +4,8 @@
  */
 
 import { ContentBlock as ContentBlockType } from '../types/strapi';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface ContentBlocksProps {
   blocks?: ContentBlockType[];
@@ -28,15 +30,28 @@ interface ContentBlockProps {
 }
 
 function ContentBlock({ block }: ContentBlockProps) {
+  const safeContent = block.type === 'rich-text' ? sanitizeHtml(block.content) : '';
+  const looksLikeHtml = block.type === 'rich-text' ? /<\/?[a-z][\s\S]*>/i.test(safeContent) : false;
+
   switch (block.type) {
     case 'rich-text':
+      if (looksLikeHtml) {
+        return (
+          <div
+            className="prose prose-sm md:prose-base max-w-none dark:prose-invert"
+            dangerouslySetInnerHTML={{
+              __html: safeContent
+            }}
+          />
+        );
+      }
+
       return (
-        <div 
-          className="prose prose-sm md:prose-base max-w-none dark:prose-invert"
-          dangerouslySetInnerHTML={{
-            __html: renderRichText(block.content)
-          }}
-        />
+        <div className="prose prose-sm md:prose-base max-w-none dark:prose-invert">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {safeContent}
+          </ReactMarkdown>
+        </div>
       );
     
     case 'quote':
@@ -108,29 +123,3 @@ function sanitizeHtml(html: string): string {
   return sanitized;
 }
 
-function markdownToHtml(markdown: string): string {
-  return markdown
-    .split('\n')
-    .map((line) => {
-      if (line.startsWith('### ')) {
-        return `<h3>${line.slice(4)}</h3>`;
-      }
-      if (line.startsWith('## ')) {
-        return `<h2>${line.slice(3)}</h2>`;
-      }
-      if (line.startsWith('# ')) {
-        return `<h1>${line.slice(2)}</h1>`;
-      }
-      if (line.trim() === '') {
-        return '<br />';
-      }
-      return `<p>${line}</p>`;
-    })
-    .join('');
-}
-
-function renderRichText(content: string): string {
-  const safeContent = sanitizeHtml(content);
-  const looksLikeHtml = /<\/?[a-z][\s\S]*>/i.test(safeContent);
-  return looksLikeHtml ? safeContent : markdownToHtml(safeContent);
-}
