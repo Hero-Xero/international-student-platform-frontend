@@ -288,7 +288,7 @@ export function HeroSlider() {
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4"
+        className="absolute inset-x-0 top-[64%] md:top-[68%] -translate-y-1/2 flex flex-col items-center justify-center text-center text-white px-4"
       >
         {/* TITLE */}
         <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold">
