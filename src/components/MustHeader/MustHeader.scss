@@ -1,7 +1,7 @@
 // Colors to exact match MUST official branding
 $must-blue: #1f3769; // Official more vibrant blue as per reference
-$left-panel-bg: rgba(20, 36, 70, 0.95);  
-$right-panel-bg: rgba(28, 48, 90, 0.95); 
+$left-panel-bg: $must-blue;
+$right-panel-bg: $must-blue;
 $must-green: #1fa56b;
 $text-white: #ffffff;
 $header-height: 105px;
@@ -110,12 +110,15 @@ $header-height: 105px;
             display: flex;
             min-height: 400px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            border-radius: 0;
+            background-color: $must-blue;
 
             /* Left Vertical Panel */
             .mega-left-panel {
               width: 280px;
               background-color: $left-panel-bg;
               padding: 20px 0;
+              border-radius: 0;
 
               .left-panel-list {
                 list-style: none;
@@ -154,6 +157,7 @@ $header-height: 105px;
                     padding: 20px 30px;
                     box-shadow: 4px 4px 20px rgba(0,0,0,0.35); // Re-apply shadow directly onto the floating child
                     z-index: 105; // Ensure it floats above nearby sections
+                    border-radius: 0;
 
                     .right-content-wrapper {
                       animation: fadeIn 0.15s ease-out;
@@ -184,6 +188,8 @@ $header-height: 105px;
                             list-style: none;
                             margin: 8px 0 0 10px;
                             padding: 0;
+                            background-color: transparent;
+                            border-radius: 0;
                             
                             li {
                               margin-bottom: 8px;
@@ -214,6 +220,7 @@ $header-height: 105px;
           left: 0;
           min-width: 250px;
           background-color: $left-panel-bg;
+          border-radius: 0;
           opacity: 0;
           visibility: hidden;
           transition: opacity 0.2s ease, visibility 0.2s ease;
@@ -246,6 +253,15 @@ $header-height: 105px;
               }
             }
           }
+        }
+
+        // Force desktop submenu surfaces to match MUST main nav and remain square
+        .mega-menu-overlay .mega-menu-container,
+        .mega-menu-overlay .mega-left-panel,
+        .mega-menu-overlay .mega-right-panel,
+        .simple-dropdown {
+          background-color: $must-blue !important;
+          border-radius: 0 !important;
         }
       }
     }
